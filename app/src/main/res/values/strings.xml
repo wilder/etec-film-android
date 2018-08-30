@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">etec-film-android</string>
+    <string name="e_mail">E-mail</string>
+    <string name="senha">senha</string>
+    <string name="acessar">Acessar</string>
+    <string name="criar_usuario">Criar Usuario</string>
+</resources>

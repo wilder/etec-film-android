@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "551244136627",
+    "firebase_url": "https://etec-film.firebaseio.com",
+    "project_id": "etec-film",
+    "storage_bucket": "etec-film.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551244136627:android:6d234c9b847cdd45",
+        "android_client_info": {
+          "package_name": "br.com.etec.etec_film_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551244136627-bdg6b75h3v5f57s1i98r1j7ommpuqvok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg9mwyMKVAi5usmGwC_B4yeqNcgZ4whl0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
