@@ -7,16 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import br.com.etec.etec_film_android.MainActivity
+import br.com.etec.etec_film_android.main.MainActivity
 import br.com.etec.etec_film_android.R
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var mAuth : FirebaseAuth
+    private lateinit var mAuthListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,57 +23,58 @@ class LoginActivity : AppCompatActivity() {
 
         val etLoginEmail = findViewById<EditText>(R.id.et_login_email)
         val etLoginSenha = findViewById<EditText>(R.id.et_login_senha)
-
         val etLoginAcessar = findViewById<Button>(R.id.et_login_acessar)
+        val etLoginCriar = findViewById<Button>(R.id.et_login_criar)
+
         etLoginAcessar.setOnClickListener {view ->
             signIn(view, etLoginEmail.text.toString(), etLoginSenha.text.toString())
         }
 
-        val etLoginCriar = findViewById<Button>(R.id.et_login_criar)
         etLoginCriar.setOnClickListener {view ->
             createUser(view, etLoginEmail.text.toString(), etLoginSenha.text.toString())
         }
+
+        mAuthListener = FirebaseAuth.AuthStateListener {
+            val user = it.currentUser
+            if(user != null) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
     }
 
     override fun onStart() {
         super.onStart()
-        verificarUsuario(mAuth.currentUser!!)
+        mAuth.addAuthStateListener(mAuthListener)
     }
 
-    fun verificarUsuario(currentUser: FirebaseUser) {
-        if(currentUser.isEmailVerified) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+    override fun onStop() {
+        super.onStop()
+        if(mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener)
         }
     }
 
     fun signIn(view: View, email: String, password: String) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
-            if(task.isSuccessful){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }else{
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, { task ->
+            if(!task.isSuccessful){
                 showMessage(view,"Error: ${task.exception?.message}")
             }
         })
     }
 
     fun createUser(view: View, email: String, password: String) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
-            if(task.isSuccessful){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }else{
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, { task ->
+            if(!task.isSuccessful){
                 showMessage(view,"Error: ${task.exception?.message}")
             }
         })
     }
 
     fun showMessage(view:View, message: String){
-
         //FirebaseAuth.getInstance().signOut()
-
-        Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).setAction("Action", null).show()
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
 
 }
