@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import br.com.etec.etec_film_android.main.MainActivity
 import br.com.etec.etec_film_android.R
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -21,17 +20,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         mAuth = FirebaseAuth.getInstance()
 
-        val etLoginEmail = findViewById<EditText>(R.id.et_login_email)
-        val etLoginSenha = findViewById<EditText>(R.id.et_login_senha)
-        val etLoginAcessar = findViewById<Button>(R.id.et_login_acessar)
-        val etLoginCriar = findViewById<Button>(R.id.et_login_criar)
 
-        etLoginAcessar.setOnClickListener {view ->
-            signIn(view, etLoginEmail.text.toString(), etLoginSenha.text.toString())
+        et_login_acessar.setOnClickListener {view ->
+            signIn(view, et_login_email.text.toString(), et_login_senha.text.toString())
         }
 
-        etLoginCriar.setOnClickListener {view ->
-            createUser(view, etLoginEmail.text.toString(), etLoginSenha.text.toString())
+        et_login_criar.setOnClickListener {view ->
+            createUser(view, et_login_email.text.toString(), et_login_senha.text.toString())
         }
 
         mAuthListener = FirebaseAuth.AuthStateListener {
