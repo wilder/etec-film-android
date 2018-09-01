@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.etec.etec_film_android.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_film.view.*
 
 class MainAdapter(val items: ArrayList<Film>, val context: Context) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
@@ -20,11 +21,9 @@ class MainAdapter(val items: ArrayList<Film>, val context: Context) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: MainAdapter.ViewHolder, position: Int) {
-        if (holder != null) {
-            val film = items[position]
-            //holder.title.text = note.title
-            holder.ivFilmNome.text = film.nome
-        }
+        val film = items[position]
+        Picasso.with(context).load(film.imagem).into(holder.ivFilmCartaz)
+        holder.ivFilmNome.text = film.name
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
