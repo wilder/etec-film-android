@@ -9,7 +9,7 @@ import br.com.etec.etec_film_android.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_film.view.*
 
-class MainAdapter(val items: ArrayList<Film>, val context: Context) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(private val items: ArrayList<Film>, val context: Context) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.card_film, parent, false)
